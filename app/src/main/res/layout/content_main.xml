@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_veiw="http://schemas.android.com/tools">
+
+
+    <TextView
+        android:id="@+id/textview_addcard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="186dp"
+        android:layout_marginEnd="88dp"
+        android:background="#212121"
+        android:padding="8dp"
+        android:text="Business Card"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
+
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    android:id="@+id/fab2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true"
+    android:layout_marginBottom="176dp"
+    android:layout_marginEnd="24dp"
+    android:clickable="true"
+    android:elevation="16dp"
+    android:focusable="true"
+    android:textColor="#ffffff"
+    android:visibility="invisible"
+    app:pressedTranslationZ="12dp"
+    app:srcCompat="@drawable/ic_action_name1"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    android:id="@+id/fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentEnd="true"
+    android:layout_marginBottom="32dp"
+    android:layout_marginEnd="24dp"
+    android:clickable="true"
+    android:elevation="16dp"
+    android:focusable="true"
+    android:textColor="#ffffff"
+    app:pressedTranslationZ="12dp"
+    app:srcCompat="@drawable/ic_action_name" />
+
+
+</RelativeLayout>
+

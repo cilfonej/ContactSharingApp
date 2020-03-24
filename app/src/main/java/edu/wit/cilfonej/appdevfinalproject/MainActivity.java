@@ -1,104 +1,122 @@
 package edu.wit.cilfonej.appdevfinalproject;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-
-import androidx.core.content.ContextCompat;
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.ResultPoint;
-import com.google.zxing.client.android.BeepManager;
-import com.journeyapps.barcodescanner.BarcodeCallback;
-import com.journeyapps.barcodescanner.BarcodeResult;
-import com.journeyapps.barcodescanner.DecoratedBarcodeView;
-import com.journeyapps.barcodescanner.DefaultDecoderFactory;
-
-import java.util.Arrays;
-import java.util.Collection;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This sample performs continuous scanning, displaying the barcode and source image whenever
- * a barcode is scanned.
- */
-public class MainActivity extends Activity {
-	private DecoratedBarcodeView barcodeView;
-	private BeepManager beepManager;
-	private String lastText;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-	private BarcodeCallback callback = new BarcodeCallback() {
-		@Override
-		public void barcodeResult(BarcodeResult result) {
-			if(result.getText() == null || result.getText().equals(lastText)) {
-				// Prevent duplicate scans
-				return;
-			}
+public class MainActivity extends AppCompatActivity {
 
-			lastText = result.getText();
-			barcodeView.setStatusText(result.getText());
+    private FloatingActionButton fab_main, fab1_card;
+    private Animation fab_open, fab_close, fab_clock, fab_anticlock;
+    TextView textView_card;
+    private RecyclerView recList;
+    Boolean isOpen = false;
 
-			beepManager.playBeepSoundAndVibrate();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-			//Added preview of scanned barcode
-			ImageView imageView = findViewById(R.id.barcodePreview);
-			imageView.setImageBitmap(result.getBitmapWithResultPoints(Color.YELLOW));
-		}
+        fab_main = findViewById(R.id.fab);
+        fab1_card = findViewById(R.id.fab2);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_anticlock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_anticlock);
+        fab_clock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_clockwise);
 
-		@Override
-		public void possibleResultPoints(List<ResultPoint> resultPoints) {
-		}
-	};
+        textView_card = (TextView) findViewById(R.id.textview_addcard);
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+        recList = (RecyclerView) findViewById(R.id.cardList);
 
-		setContentView(R.layout.activity_main);
+        recList.setHasFixedSize(true);
 
-		barcodeView = findViewById(R.id.barcode_scanner);
-		Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
-		barcodeView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
-		barcodeView.initializeFromIntent(getIntent());
-		barcodeView.decodeContinuous(callback);
+        LinearLayoutManager wow = new LinearLayoutManager(this);
 
-		beepManager = new BeepManager(this);
-	}
+        wow.setOrientation(LinearLayoutManager.VERTICAL);
 
-	@Override
-	protected void onResume() {
-		super.onResume();
+        recList.setLayoutManager(wow);
 
-		barcodeView.resume();
-	}
+        ContactAdapter ca = new ContactAdapter(createList(30));
+        recList.setAdapter(ca);
 
-	@Override
-	protected void onPause() {
-		super.onPause();
 
-		barcodeView.pause();
-	}
+    fab_main.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
-	public void pause(View view) {
-		barcodeView.pause();
-	}
+            if (isOpen){
 
-	public void resume(View view) {
-		barcodeView.resume();
-	}
+                textView_card.setVisibility(View.INVISIBLE);
+                fab1_card.startAnimation(fab_close);
+                fab_main.startAnimation(fab_anticlock);
+                fab1_card.setClickable(false);
+                isOpen = false;
+            }
 
-	public void triggerScan(View view) {
-		barcodeView.decodeSingle(callback);
-	}
+            else {
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		return barcodeView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
-	}
+                textView_card.setVisibility(View.VISIBLE);
+                fab1_card.startAnimation(fab_open);
+                fab_main.startAnimation(fab_clock);
+                fab1_card.setClickable(true);
+                isOpen = true;
+
+            }
+
+
+        }
+    });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+    private List<ContactInfo> createList(int size) {
+
+        List<ContactInfo> result = new ArrayList<ContactInfo>();
+        for (int i=1; i <= size; i++) {
+            ContactInfo ci = new ContactInfo();
+            ci.name = ContactInfo.NAME_PREFIX + i;
+            ci.surname = ContactInfo.SURNAME_PREFIX + i;
+            ci.email = ContactInfo.EMAIL_PREFIX + i + "@test.com";
+
+            result.add(ci);
+
+        }
+
+        return result;
+    }
+
+
 }

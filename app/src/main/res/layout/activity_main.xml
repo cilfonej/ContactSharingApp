@@ -14,27 +14,56 @@
         android:layout_height="match_parent"/>
 
     <TextView
-    android:id="@+id/textview_addcard"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentEnd="true"
-    android:layout_marginBottom="186dp"
-    android:layout_marginEnd="88dp"
-    android:background="#212121"
-    android:padding="8dp"
-    android:text="Business Card"
-    android:textColor="#ffffff"
-    android:visibility="invisible" />
+        android:id="@+id/textview_addcard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="186dp"
+        android:layout_marginEnd="88dp"
+        android:background="#212121"
+        android:padding="8dp"
+        android:text="Exchange Contact Codes"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-
-        android:id="@+id/fab2"
+        android:id="@+id/fab_scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="176dp"
+        android:layout_marginEnd="24dp"
+        android:clickable="true"
+        android:elevation="16dp"
+        android:focusable="true"
+        android:textColor="#ffffff"
+        android:visibility="invisible"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/ic_action_name1"/>
+
+    <TextView
+        android:id="@+id/textview_showCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="116dp"
+        android:layout_marginEnd="88dp"
+        android:background="#212121"
+        android:padding="8dp"
+        android:text="Edit Personal Details"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_disp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="106dp"
         android:layout_marginEnd="24dp"
         android:clickable="true"
         android:elevation="16dp"
